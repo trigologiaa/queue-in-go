@@ -25,12 +25,11 @@
 package queue
 
 import (
-	"errors"
 	"fmt"
 	"slices"
 )
 
-// Queue is a generic FIFO (First In, First Out) data structure.
+// A generic FIFO (First In, First Out) data structure.
 //
 // Queue[T] holds elements of any comparable type T.
 //
@@ -39,7 +38,7 @@ type Queue[T comparable] struct {
 	data []T
 }
 
-// NewQueue creates and returns a new empty Queue for type T.
+// Creates and returns a new empty Queue for type T.
 //
 // Returns:
 //   - *Queue[T]: A new empty queue for type T.
@@ -53,7 +52,7 @@ func NewQueue[T comparable]() *Queue[T] {
 	return &Queue[T]{}
 }
 
-// Enqueue adds a new element to the end of the queue.
+// Adds a new element to the end of the queue.
 //
 // Parameters:
 //   - data: The element to be added to the queue.
@@ -67,7 +66,7 @@ func (q *Queue[T]) Enqueue(data T) {
 	q.data = append(q.data, data)
 }
 
-// Dequeue removes and returns the front element of the queue.
+// Removes and returns the front element of the queue.
 //
 // Returns:
 //   - value: The front element of the queue.
@@ -86,14 +85,14 @@ func (q *Queue[T]) Enqueue(data T) {
 func (q *Queue[T]) Dequeue() (T, error) {
 	if q.IsEmpty() {
 		var zero T
-		return zero, errors.New("empty queue")
+		return zero, fmt.Errorf("empty queue")
 	}
 	head := q.data[0]
 	q.data = q.data[1:]
 	return head, nil
 }
 
-// Front returns the front element of the queue without removing it.
+// Returns the front element of the queue without removing it.
 //
 // Returns:
 //   - value: The front element of the queue.
@@ -110,13 +109,13 @@ func (q *Queue[T]) Dequeue() (T, error) {
 func (q *Queue[T]) Front() (T, error) {
 	if q.IsEmpty() {
 		var zero T
-		return zero, errors.New("empty queue")
+		return zero, fmt.Errorf("empty queue")
 	}
 	head := q.data[0]
 	return head, nil
 }
 
-// IsEmpty reports whether the queue contains no elements.
+// Reports whether the queue contains no elements.
 //
 // Returns:
 //   - bool: true if the queue is empty; false otherwise.
@@ -129,7 +128,7 @@ func (q *Queue[T]) IsEmpty() bool {
 	return len(q.data) == 0
 }
 
-// Size returns the number of elements currently in the queue.
+// Returns the number of elements currently in the queue.
 //
 // Returns:
 //   - int: The count of elements in the queue.
@@ -144,7 +143,7 @@ func (q *Queue[T]) Size() int {
 	return len(q.data)
 }
 
-// Clear removes all elements from the queue, resetting it to empty.
+// Removes all elements from the queue, resetting it to empty.
 //
 // Example:
 //
@@ -156,7 +155,7 @@ func (q *Queue[T]) Clear() {
 	q.data = make([]T, 0)
 }
 
-// String returns a string representation of the queue.
+// Returns a string representation of the queue.
 //
 // Returns:
 //   - string: A string representation of the queue.
@@ -171,7 +170,7 @@ func (q *Queue[T]) String() string {
 	return fmt.Sprintf("Queue: %v", q.data)
 }
 
-// PeekLast returns the last element of the queue without removing it.
+// Returns the last element of the queue without removing it.
 //
 // Returns:
 //   - value: The last element of the queue.
@@ -189,12 +188,12 @@ func (q *Queue[T]) String() string {
 func (q *Queue[T]) PeekLast() (T, error) {
 	if q.IsEmpty() {
 		var zero T
-		return zero, errors.New("empty queue")
+		return zero, fmt.Errorf("empty queue")
 	}
 	return q.data[q.Size()-1], nil
 }
 
-// Contains reports whether the queue contains the given value.
+// Reports whether the queue contains the given value.
 //
 // Parameters:
 //   - data: The value to search for.
@@ -212,7 +211,7 @@ func (q *Queue[T]) Contains(data T) bool {
 	return slices.Contains(q.data, data)
 }
 
-// ToSlice returns a copy of the queue's elements as a slice.
+// Returns a copy of the queue's elements as a slice.
 //
 // Returns:
 //   - []T: A copy of the queue's internal slice.
@@ -230,7 +229,7 @@ func (q *Queue[T]) ToSlice() []T {
 	return result
 }
 
-// Remove deletes the first occurrence of a given value from the queue.
+// Deletes the first occurrence of a given value from the queue.
 //
 // Parameters:
 //   - data: The value to remove.
@@ -255,7 +254,7 @@ func (q *Queue[T]) Remove(data T) bool {
 	return false
 }
 
-// Copy creates and returns a deep copy of the queue.
+// Creates and returns a deep copy of the queue.
 //
 // Returns:
 //   - *Queue[T]: A new queue with the same elements.
@@ -272,7 +271,7 @@ func (q *Queue[T]) Copy() *Queue[T] {
 	return &Queue[T]{data: newData}
 }
 
-// Reverse reverses the order of elements in the queue.
+// Reverses the order of elements in the queue.
 //
 // Example:
 //
